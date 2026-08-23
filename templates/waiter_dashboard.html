@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart POS - Waiter Terminal</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Topbar Navigation -->
+    <header class="app-header">
+        <div class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-utensils"></i></div>
+            <span>Smart POS</span>
+        </div>
+        <div class="user-profile">
+            <span id="user-display-name" style="font-weight: 600;">Waiter</span>
+            <span id="user-role-badge" class="role-badge waiter">Waiter</span>
+            <button class="btn-secondary" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="dashboard-wrapper">
+        <!-- POS Menu Section -->
+        <main class="pos-menu-section">
+            <!-- Category Selector Buttons -->
+            <div class="pos-menu-filters" id="category-filters">
+                <button class="filter-btn active" onclick="filterCategory('All')">All Items</button>
+                <!-- Categories dynamically loaded -->
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menu-container">
+                <!-- Menu items dynamically loaded -->
+                <div class="cart-empty" style="grid-column: 1 / -1; min-height: 200px;">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Loading restaurant menu...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- POS Cart Sidebar -->
+        <aside class="pos-sidebar">
+            <div class="sidebar-header">
+                <h2>New Order</h2>
+                <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div class="cart-items-container" id="cart-items-container">
+                <div class="cart-empty">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <p>Cart is empty.<br>Tap menu items to add them here.</p>
+                </div>
+            </div>
+
+            <!-- Order Confirmation & Controls -->
+            <div class="pos-cart-footer">
+                <div class="cart-totals">
+                    <span>Total Amount</span>
+                    <span id="cart-total-price">₹0.00</span>
+                </div>
+                
+                <form class="cart-form" onsubmit="submitOrder(event)">
+                    <!-- Table Number -->
+                    <div class="table-input-group">
+                        <div class="form-group">
+                            <label for="order-table">Table / Order #</label>
+                            <input type="text" id="order-table" class="form-control" placeholder="e.g. 5, Bar-2" required>
+                        </div>
+                    </div>
+
+                    <!-- Dine-in vs Parcel Toggle -->
+                    <div class="form-group">
+                        <label>Order Service Type</label>
+                        <div class="order-type-toggle">
+                            <button type="button" class="order-type-btn active" data-type="Dine-in" onclick="setOrderType('Dine-in')">
+                                <i class="fa-solid fa-chair"></i> Dine-in
+                            </button>
+                            <button type="button" class="order-type-btn" data-type="Parcel" onclick="setOrderType('Parcel')">
+                                <i class="fa-solid fa-box-open"></i> Parcel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary" id="btn-submit-order">
+                        <span>Send to Kitchen</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <script src="/static/js/waiter.js"></script>
+</body>
+</html>

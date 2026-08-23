@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart KDS - Admin Analytics</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Topbar Navigation -->
+    <header class="app-header">
+        <div class="logo">
+            <div class="logo-icon" style="background: var(--gradient-dinein);"><i class="fa-solid fa-chart-line"></i>
+            </div>
+            <span>Admin Analytics</span>
+        </div>
+        <div class="user-profile">
+
+            <button class="btn-secondary" onclick="window.location.href='/waiter'">
+                <i class="fa-solid fa-utensils"></i> POS Terminal
+            </button>
+            <button class="btn-secondary" onclick="window.location.href='/kitchen'">
+                <i class="fa-solid fa-fire-burner"></i> Kitchen View
+            </button>
+            <span id="user-display-name" style="font-weight: 600;">Admin</span>
+            <span id="user-role-badge" class="role-badge admin">Admin</span>
+            <button class="btn-secondary" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="dashboard-wrapper" style="overflow-y: auto; display: block; padding: 24px;">
+        <!-- Header Section -->
+        <div style="margin-bottom: 24px;">
+            <h1 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 6px;">Sales & Operations Dashboard</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Real-time business intelligence and analytics
+                overview.</p>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="analytics-metrics-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 24px;">
+            <!-- Today's Stats -->
+            <div class="analytics-card"
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; position: relative; overflow: hidden;">
+                <div
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-dinein);">
+                </div>
+                <div
+                    style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                    Today's Revenue</div>
+                <div id="stat-today-revenue"
+                    style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">₹0.00
+                </div>
+                <div id="stat-today-orders" style="color: var(--text-secondary); font-size: 0.85rem;">0 orders received
+                </div>
+            </div>
+
+            <!-- Weekly Stats -->
+            <div class="analytics-card"
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; position: relative; overflow: hidden;">
+                <div
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-parcel);">
+                </div>
+                <div
+                    style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                    Weekly Revenue</div>
+                <div id="stat-week-revenue"
+                    style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">₹0.00
+                </div>
+                <div id="stat-week-orders" style="color: var(--text-secondary); font-size: 0.85rem;">0 orders (Last 7
+                    days)</div>
+            </div>
+
+            <!-- Monthly Stats -->
+            <div class="analytics-card"
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; position: relative; overflow: hidden;">
+                <div
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-chef);">
+                </div>
+                <div
+                    style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                    Monthly Revenue</div>
+                <div id="stat-month-revenue"
+                    style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">₹0.00
+                </div>
+                <div id="stat-month-orders" style="color: var(--text-secondary); font-size: 0.85rem;">0 orders (Last 30
+                    days)</div>
+            </div>
+
+            <!-- All-Time Stats -->
+            <div class="analytics-card"
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; position: relative; overflow: hidden;">
+                <div
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-button);">
+                </div>
+                <div
+                    style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                    All-Time Revenue</div>
+                <div id="stat-alltime-revenue"
+                    style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">₹0.00
+                </div>
+                <div id="stat-alltime-orders" style="color: var(--text-secondary); font-size: 0.85rem;">0 orders total
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytical Grids Section -->
+        <div class="analytics-sections-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 24px;">
+            <!-- Daily sales breakdown list -->
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; display: flex; flex-direction: column;">
+                <h2
+                    style="font-size: 1.15rem; font-weight: 800; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-calendar-days" style="color: var(--accent-purple);"></i> Daily Sales Trend
+                    (Last 7 Days)
+                </h2>
+                <div id="daily-trend-container" style="display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                    <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
+                        <p>Loading sales trend...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Selling Items -->
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; display: flex; flex-direction: column;">
+                <h2
+                    style="font-size: 1.15rem; font-weight: 800; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-crown" style="color: #eab308;"></i> Top Selling Menu Items
+                </h2>
+                <div id="top-items-container" style="display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                    <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+                        <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem; margin-bottom: 8px;"></i>
+                        <p>Loading items statistics...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distribution & Operational overview -->
+            <div
+                style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 24px; display: flex; flex-direction: column;">
+                <h2
+                    style="font-size: 1.15rem; font-weight: 800; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-chart-pie" style="color: #06b6d4;"></i> Service & Operations
+                </h2>
+
+                <!-- Dine-in vs Parcel Distribution -->
+                <div style="margin-bottom: 24px;">
+                    <h3
+                        style="font-size: 0.9rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Order Service Types</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;" id="order-type-container">
+                        <!-- Dine-in and Parcel values loaded dynamically -->
+                        <div style="text-align: center; color: var(--text-muted); padding: 20px 0;">
+                            <p>Loading distribution...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Status overview -->
+                <div>
+                    <h3
+                        style="font-size: 0.9rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">
+                        Active Queue Statuses</h3>
+                    <div style="display: flex; gap: 10px;" id="order-status-container">
+                        <!-- Status counts loaded dynamically -->
+                        <div style="text-align: center; color: var(--text-muted); width: 100%; padding: 20px 0;">
+                            <p>Loading status queue...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/admin.js"></script>
+</body>
+
+</html>
