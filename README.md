@@ -1,17 +1,26 @@
-# 🍽️ Smart Restaurant KDS & POS Management System
+# 🍽️ Smart Restaurant KDS & POS System (MERN Stack)
 
-An enterprise-grade, real-time **Kitchen Display System (KDS)**, **Point of Sale (POS) Terminal**, and **AI-Driven Kitchen Workflow Optimizer** built with **Node.js**, **Express**, **MongoDB**, and **Vanilla HTML5/CSS3/JavaScript**.
+[![MERN Stack](https://img.shields.io/badge/Stack-MERN-green.svg)](https://en.wikipedia.org/wiki/MEAN_(solution_stack))
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-v4.19.2-000000.svg?logo=express&logoColor=white)](https://expressjs.com/)
+[![React.js](https://img.shields.io/badge/React.js-v19-61DAFB.svg?logo=react&logoColor=black)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-v6.7-47A248.svg?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Vite](https://img.shields.io/badge/Vite-v8-646CFF.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Designed for fast-paced dining establishments, this solution replaces legacy paper tickets with intelligent digital order routing, automated batch-cooking algorithms, real-time order lifecycle tracking, and comprehensive admin business intelligence analytics.
+An enterprise-grade, real-time **Kitchen Display System (KDS)**, **Point of Sale (POS) Terminal**, and **AI-Driven Kitchen Workflow Optimizer** built entirely with the **MERN Stack** (**M**ongoDB, **E**xpress.js, **R**eact.js, **N**ode.js) using **pure JavaScript / JSX (No TypeScript)** and **Vanilla CSS3 Glassmorphism**.
+
+Designed for high-volume dining environments, this application modernizes restaurant operations by replacing physical paper tickets with intelligent digital order routing, real-time item status transitions, automated batch-cooking algorithms, and executive business intelligence analytics.
 
 ---
 
 ## 📑 Table of Contents
 
-- [Overview & Value Proposition](#-overview--value-proposition)
-- [Tech Stack & Programming Languages](#-tech-stack--programming-languages)
-- [Architectural Approach & Design Patterns](#-architectural-approach--design-patterns)
-- [Key Features by Role](#-key-features-by-role)
+- [🌟 Overview & Value Proposition](#-overview--value-proposition)
+- [🧩 MERN Stack Architecture Breakdown](#-mern-stack-architecture-breakdown)
+- [💻 Tech Stack & Programming Languages](#-tech-stack--programming-languages)
+- [🏗️ Architectural Approach & Design Patterns](#-architectural-approach--design-patterns)
+- [✨ Key Features by Role](#-key-features-by-role)
   - [🔐 Authentication & Role-Based Access Control (RBAC)](#-authentication--role-based-access-control-rbac)
   - [🛒 Waiter POS Terminal (`/waiter`)](#-waiter-pos-terminal-waiter)
   - [👨‍🍳 Chef Kitchen Display System (`/kitchen`)](#-chef-kitchen-display-system-kitchen)
@@ -31,10 +40,54 @@ Designed for fast-paced dining establishments, this solution replaces legacy pap
 
 In traditional restaurant kitchens, order delays, item preparation bottlenecks, and miscommunication between front-of-house waiters and back-of-house chefs result in lower customer satisfaction and lost revenue.
 
-The **Smart Restaurant KDS & POS Management System** solves these challenges by connecting the entire restaurant ecosystem:
-1. **Waiters** place orders via an intuitive POS interface supporting both **Dine-in** and **Parcel/Takeaway** orders.
-2. **Chefs** receive live kitchen tickets sorted automatically by wait time, status, and urgency, backed by an **AI recommendation engine** that groups duplicate items across tickets for batch cooking.
-3. **Admins** gain real-time visibility into revenue metrics, daily sales trends, item popularity, and kitchen queue efficiency.
+The **Smart Restaurant KDS & POS Management System** solves these challenges through a unified MERN application:
+1. **Waiters** place orders instantly using a responsive POS terminal supporting both **Dine-in** and **Parcel / Takeaway** modes.
+2. **Chefs** monitor incoming tickets sorted dynamically by urgency and wait time on the Kitchen Display Screen (KDS), guided by an **AI recommendation engine** that groups duplicate items across tickets for batch cooking.
+3. **Admins** analyze business health with real-time operational metrics, 7-day revenue charts, top 10 best-sellers, and kitchen queue efficiency.
+
+---
+
+## 🧩 MERN Stack Architecture Breakdown
+
+This project is architected strictly around the **MERN** application stack:
+
+```
+┌────────────────────────────────────────────────────────┐
+│             REACT.JS (React 19 SPA + Vite)             │
+│   Login View  │ Waiter POS │ Chef KDS │ Admin Analytics │
+└───────────────────────────▲────────────────────────────┘
+                            │ Fetch API / JWT Bearer Tokens
+┌───────────────────────────▼────────────────────────────┐
+│              EXPRESS.JS + NODE.JS BACKEND              │
+│      Route Handlers │ JWT Middleware │ AI Optimizer    │
+└───────────────────────────▲────────────────────────────┘
+                            │ Native MongoDB Driver v6.7
+┌───────────────────────────▼────────────────────────────┐
+│                    MONGODB DATABASE                    │
+│      users Collection │ menu Collection │ orders       │
+└────────────────────────────────────────────────────────┘
+```
+
+* **M - MongoDB**:
+  * High-performance NoSQL document database (`smart_restaurant_kds`).
+  * Manages `users`, `menu`, and `orders` collections.
+  * Connects via the official native MongoDB Node.js driver (no heavy ORM overhead).
+  * Automatically seeds over 50 dishes across 7 categories upon initialization.
+
+* **E - Express.js**:
+  * Lightweight RESTful web framework driving server routes and API endpoints.
+  * Enforces stateless JWT authentication and role authorization (`Admin`, `Waiter`, `Chef`).
+  * Hosts the compiled production bundle (`dist/`) while exposing clean JSON endpoints under `/api/...`.
+
+* **R - React.js (Pure JavaScript / JSX, No TypeScript)**:
+  * Fast Single-Page Application (SPA) driven by React 19 and React Router v7.
+  * Modular component architecture across dedicated pages (`Login.jsx`, `WaiterDashboard.jsx`, `KitchenDashboard.jsx`, `AdminDashboard.jsx`).
+  * Powered by Vite for sub-second development HMR and lightning-fast production bundling.
+  * Implements responsive state handling, automated polling timers, and fluid micro-animations.
+
+* **N - Node.js**:
+  * High-throughput, event-driven JavaScript asynchronous runtime.
+  * Handles concurrent client requests, background polling, and real-time computation of AI batch algorithms.
 
 ---
 
@@ -43,39 +96,40 @@ The **Smart Restaurant KDS & POS Management System** solves these challenges by 
 ### **Backend Technologies**
 | Component | Technology | Description |
 | :--- | :--- | :--- |
-| **Language** | **JavaScript (ES6+ / Node.js v18+)** | Asynchronous server runtime driving non-blocking operations. |
-| **Framework** | **Express.js (v4.19.2)** | Lightweight Web & REST API framework. |
-| **Database** | **MongoDB Driver (v6.7.0)** | Native MongoDB client connecting to document databases. |
+| **Language** | **JavaScript (Node.js ES6+ / CommonJS)** | Asynchronous server runtime driving non-blocking operations. |
+| **Framework** | **Express.js (v4.19.2)** | REST API routing, static file hosting, and error handling. |
+| **Database** | **MongoDB Driver (v6.7.0)** | Native MongoDB client with collection pooling. |
 | **Authentication** | **JSON Web Token (`jsonwebtoken` v9.0.2)** | Stateless Bearer token security with 240-minute expiration. |
-| **Security** | **Bcrypt.js (v2.4.3)** | One-way salt password hashing (`bcrypt.hashSync`). |
+| **Security** | **Bcrypt.js (v2.4.3)** | One-way cryptographic password hashing. |
 | **Middleware** | **CORS (v2.8.5), dotenv (v16.4.5)** | Cross-origin resource sharing & environment configuration. |
 
 ### **Frontend Technologies**
 | Component | Technology | Description |
 | :--- | :--- | :--- |
-| **Structure** | **HTML5** | Semantic HTML structure for responsive dashboards. |
-| **Logic** | **Vanilla JavaScript (ES6 Modules/Fetch API)** | Client-side reactive DOM manipulation & REST API integration. |
+| **Framework** | **React.js 19 (Pure JS / JSX, No TypeScript)** | Component-based reactive UI architecture. |
+| **Routing** | **React Router DOM (v7)** | Client-side declarative routing (`/`, `/waiter`, `/kitchen`, `/admin`). |
+| **Build Tool** | **Vite (v8)** | Next-generation frontend build tooling and HMR dev server. |
 | **Styling** | **Custom Vanilla CSS3** | Dark glassmorphic design system using CSS variables, Flexbox, & Grid. |
-| **Icons & Typography** | **FontAwesome 6.4.0 (CDN)** | Scalable vector icons for intuitive user UI feedback. |
+| **Icons & Typography** | **FontAwesome 6.4.0 (CDN) & Plus Jakarta Sans** | Scalable vector icons and clean Google Fonts typography. |
 
 ---
 
 ## 🏗️ Architectural Approach & Design Patterns
 
-### 1. **RESTful API & Single-Page Dashboard Architecture**
-The application decouples backend API endpoints (`/api/...`) from view rendering routes (`/`, `/waiter`, `/kitchen`, `/admin`). The client uses native `fetch()` calls with JWT header authorization to request data dynamically and update DOM containers without full page reloads.
+### 1. **Decoupled Client-Server API Architecture**
+Frontend views are decoupled into standalone React components (`src/pages/`) that communicate with the Express backend via REST endpoints (`/api/...`). Requests include standard JWT headers (`Authorization: Bearer <token>`).
 
 ### 2. **Stateless JWT Security Model**
-User sessions rely on signed JWT tokens storing the `username` (`sub`) and `role`. Route protection is enforced via middleware (`authenticateToken`), while the client stores tokens in `localStorage` (`kds_token`, `kds_role`, `kds_username`) for persistent access across tabs.
+User sessions rely on signed JWT tokens storing `username` (`sub`) and `role`. Route protection is verified on the backend via Express middleware (`authenticateToken`), while the React frontend persists session credentials in `localStorage` (`kds_token`, `kds_role`, `kds_username`) with automatic route guarding.
 
-### 3. **Native MongoDB Driver & In-Memory Lookup Caching**
-Instead of relying on heavy ORMs/ODMs (like Mongoose or Sequelize), the backend uses native MongoDB collection queries. To avoid standard **N+1 query performance degradation** during bulk order processing, menu item data is loaded in bulk and cached in memory per request loop.
+### 3. **Native MongoDB Driver & In-Memory Caching**
+Instead of heavy ORM abstractions, the backend queries MongoDB directly. To prevent **N+1 query bottlenecks** during bulk active order processing, menu item records are cached in memory per request cycle.
 
-### 4. **Real-Time Synchronous Polling Strategy**
-Client dashboards (`/kitchen` and `/admin`) utilize automated 5-second and 10-second polling timers (`setInterval`) to fetch active order statuses and AI suggestions without requiring complicated WebSocket fallback configurations.
+### 4. **Synchronous Polling Strategy**
+The Kitchen Display (`5s`) and Admin Analytics (`10s`) use synchronized `setInterval` polling with React `useEffect` lifecycle cleanups, ensuring immediate ticket updates without WebSocket reconnection overhead.
 
-### 5. **Design System & Glassmorphism Aesthetics**
-The user interface features a sleek dark mode aesthetic with HSL-based CSS variables, neon gradient highlights (`--gradient-dinein`, `--gradient-parcel`, `--gradient-chef`, `--gradient-button`), custom scrollbars, subtle hover scale transformations, and status pulses.
+### 5. **Dark Glassmorphic Design System**
+The user interface features a sleek dark mode aesthetic with HSL-based CSS variables, neon gradient accents (`--gradient-dinein`, `--gradient-parcel`, `--gradient-chef`, `--gradient-button`), custom scrollbars, subtle hover scale transformations, and status pulses.
 
 ---
 
@@ -83,21 +137,21 @@ The user interface features a sleek dark mode aesthetic with HSL-based CSS varia
 
 ### 🔐 Authentication & Role-Based Access Control (RBAC)
 - **Role Hierarchy**: Supports **`Admin`**, **`Waiter`**, and **`Chef`**.
-- **User Registration**: Validation ensures minimum password lengths (≥4 chars), username uniqueness, and valid role selection.
-- **Role Redirection**: Automatic client-side redirection upon login:
+- **User Registration**: Validation enforces minimum password lengths (≥4 chars), username uniqueness, and valid role selection.
+- **Smart Redirection**:
   - `Chef` $\rightarrow$ redirected to `/kitchen` KDS view.
-  - `Admin` $\rightarrow$ redirected to `/admin` Analytics view (with fast topbar switch links to POS & KDS).
+  - `Admin` $\rightarrow$ redirected to `/admin` Analytics view (with topbar switch buttons to POS & KDS).
   - `Waiter` $\rightarrow$ redirected to `/waiter` POS view.
 
 ---
 
 ### 🛒 Waiter POS Terminal (`/waiter`)
-- **Dynamic Category Filter Bar**: Filter menu items by categories: *All Items, Gobi, Rice items, Milkshakes, Ice creams, Spl.Ice creams, Ice cream parcel, Basanthi parcel*.
+- **Dynamic Category Filter Bar**: Filter menu items: *All Items, Gobi, Rice items, Milkshakes, Ice creams, Spl.Ice creams, Ice cream parcel, Basanthi parcel*.
 - **Interactive Menu Grid**: Visual dish cards displaying prices in Indian Rupees (₹) and preparation time estimates.
-- **Cart Management**: Add items, adjust item quantities ($+ / -$), clear cart, and calculate totals in real-time.
+- **Cart Management**: Add items, adjust item quantities ($+ / -$), remove individual dishes, clear cart, and calculate real-time totals.
 - **Order Service Types**:
   - **Dine-in**: Requires entering a specific Table Number (e.g., `Table 5`, `Bar-2`).
-  - **Parcel / Takeaway**: Automatically sets location to `"Takeaway"` if unspecified.
+  - **Parcel / Takeaway**: Automatically marks order location as `"Takeaway"` if unspecified.
 - **Instant Dispatch**: Sends order payloads directly to MongoDB and triggers live updates on the Kitchen Display Screen.
 
 ---
@@ -114,9 +168,9 @@ The user interface features a sleek dark mode aesthetic with HSL-based CSS varia
 ---
 
 ### 🧠 AI Kitchen Workflow Optimizer
-Right-side smart panel on the Kitchen Display Screen delivering actionable optimization insight:
+Right-side smart panel on the Kitchen Display Screen delivering actionable optimization insights:
 1. **Batch Cooking Recommendations**: Identifies identical menu items across multiple table orders and prompts the chef to prepare them in a single batch.
-2. **Urgency & Priority Warnings**: Flag orders exceeding threshold wait times and highlight target items.
+2. **Urgency & Priority Warnings**: Flags orders exceeding threshold wait times and highlights target items.
 3. **Recommended Cooking Sequence**: Ranked list of order tickets based on calculated urgency scores.
 
 ---
@@ -233,25 +287,28 @@ The database engine (`database.js`) connects to MongoDB database `smart_restaura
 
 ```
 Restaurant Management/
-├── app.js                   # Express server entry point, route middleware, and API controllers
+├── app.js                   # Express server entry point, API controllers & React dist static server
 ├── database.js              # MongoDB database connector, collection getters & menu auto-seeder
 ├── ai_optimizer.js          # AI batch cooking & multi-factor priority scoring algorithm
-├── package.json             # NPM project metadata & dependency manifest
-├── package-lock.json        # Locked dependency tree
-├── .env                     # (Optional) Environment configuration file
-├── templates/               # HTML5 frontend page templates
-│   ├── login.html           # Unified login & account creation interface
-│   ├── waiter_dashboard.html# Waiter POS ordering terminal
-│   ├── kitchen_dashboard.html# Chef Kitchen Display System (KDS) & AI suggestions
-│   └── admin_dashboard.html # Executive business intelligence & operational analytics
+├── package.json             # NPM project metadata & dependencies (React 19, Express, MongoDB, Vite)
+├── vite.config.mjs          # Vite configuration with React plugin & backend API proxy
+├── index.html               # Root HTML mounting React SPA root container
+├── src/                     # React application source code (Pure JavaScript / JSX)
+│   ├── main.jsx             # React DOM root entry point
+│   ├── App.jsx              # Main routing hub (React Router DOM)
+│   ├── styles.css           # Unified CSS design system & dynamic animations
+│   └── pages/               # React page components
+│       ├── Login.jsx            # Sign In & Registration interface
+│       ├── WaiterDashboard.jsx  # Waiter POS ordering terminal
+│       ├── KitchenDashboard.jsx # Chef Kitchen Display System (KDS) & AI suggestions
+│       └── AdminDashboard.jsx   # Business intelligence & operational analytics
+├── templates/               # Re-exports corresponding React components (.jsx)
+│   ├── login.jsx
+│   ├── waiter_dashboard.jsx
+│   ├── kitchen_dashboard.jsx
+│   └── admin_dashboard.jsx
+├── dist/                    # Compiled production build generated by Vite
 └── static/                  # Static assets served via Express
-    ├── css/
-    │   └── styles.css       # Complete unified CSS design system & dynamic animations
-    └── js/
-        ├── auth.js          # Client JWT authentication, token storage & route guards
-        ├── waiter.js        # POS menu filter, cart state manager & order submitter
-        ├── kitchen.js       # Live order ticket renderer, status toggle & 5s auto-poller
-        └── admin.js         # Analytics metrics renderer, trend charts & 10s auto-poller
 ```
 
 ---
@@ -272,7 +329,7 @@ JWT_SECRET_KEY=b3d7a8e8f81c9a0c20a48a9b2b5c5e8f2390a1b2c3d4e5f6
 
 ### **Prerequisites**
 - **Node.js**: v18.0.0 or higher
-- **MongoDB**: Local MongoDB instance running on `mongodb://localhost:27017/` (or MongoDB Atlas connection URI)
+- **MongoDB**: Local MongoDB instance running on `mongodb://localhost:27017/` (or a MongoDB Atlas connection URI)
 
 ### **Step-by-Step Setup**
 
@@ -287,27 +344,52 @@ JWT_SECRET_KEY=b3d7a8e8f81c9a0c20a48a9b2b5c5e8f2390a1b2c3d4e5f6
    ```
 
 3. **Ensure MongoDB is Running**:
-   - Start your local MongoDB server via command line or MongoDB Compass.
+   - Start your local MongoDB server via command line (`mongod`) or MongoDB Compass.
 
-4. **Start the Application**:
-   - **Development mode**:
-     ```bash
-     npm run dev
-     ```
-   - **Production mode**:
-     ```bash
-     npm start
-     ```
+---
 
-5. **Access the Application**:
-   - Open your browser and navigate to `http://localhost:8000`.
+### **Running the Application**
+
+#### **Option 1: Integrated Mode (Recommended — Single Command)**
+Builds the React frontend and serves both the React UI and Express APIs together from a single server:
+
+1. Build the React frontend:
+   ```bash
+   npm run build
+   ```
+2. Start the Express server:
+   ```bash
+   npm start
+   ```
+3. Open your browser:
+   👉 **http://localhost:8000**
+
+---
+
+#### **Option 2: Live Development Mode (with React Hot Reloading)**
+Runs the backend API and the Vite React frontend in parallel with instant hot module reloading:
+
+1. **Terminal 1** — Start the Express API server:
+   ```bash
+   npm run dev:backend
+   ```
+   *(Running on `http://localhost:8000`)*
+
+2. **Terminal 2** — Start the Vite React development server:
+   ```bash
+   npm run dev:frontend
+   ```
+   *(Running on `http://localhost:3000` with automated proxying to port 8000)*
+
+3. Open your browser:
+   👉 **http://localhost:3000**
 
 ---
 
 ## 💡 Operational Walkthrough
 
 1. **Account Registration**:
-   - Visit `http://localhost:8000`.
+   - Visit `http://localhost:8000` (or `http://localhost:3000`).
    - Click the **"Register"** tab.
    - Create 3 user accounts for testing:
      - Username: `admin1` | Password: `password` | Role: `Admin`
@@ -330,3 +412,4 @@ JWT_SECRET_KEY=b3d7a8e8f81c9a0c20a48a9b2b5c5e8f2390a1b2c3d4e5f6
 4. **Admins (Analytics)**:
    - Log in as `admin1`.
    - View real-time sales numbers, 7-day revenue charts, top 10 best-selling items, and service breakdown statistics.
+   - Use topbar shortcuts to jump directly to the Waiter POS or Chef Kitchen display at any time.

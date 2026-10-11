@@ -21,25 +21,25 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files
+// Serve static files and built React bundle
+const fs = require('fs');
 app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
-// Serving HTML templates
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'templates', 'login.html'));
-});
+// Helper to serve React SPA
+const serveReact = (req, res) => {
+  const distHtml = path.join(__dirname, 'dist', 'index.html');
+  if (fs.existsSync(distHtml)) {
+    return res.sendFile(distHtml);
+  }
+  res.status(503).send("React application not built yet. Run 'npm run build' first.");
+};
 
-app.get('/waiter', (req, res) => {
-  res.sendFile(path.join(__dirname, 'templates', 'waiter_dashboard.html'));
-});
-
-app.get('/kitchen', (req, res) => {
-  res.sendFile(path.join(__dirname, 'templates', 'kitchen_dashboard.html'));
-});
-
-app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'templates', 'admin_dashboard.html'));
-});
+// Route handlers
+app.get('/', serveReact);
+app.get('/waiter', serveReact);
+app.get('/kitchen', serveReact);
+app.get('/admin', serveReact);
 
 // Middleware for JWT Authentication
 function authenticateToken(req, res, next) {
